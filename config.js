@@ -1,4 +1,5 @@
-const HOST = 'ec2-3-18-185-218.us-east-2.compute.amazonaws.com';
+// const HOST = 'ec2-3-18-185-218.us-east-2.compute.amazonaws.com';
+const HOST = 'http://localhost';
 const PORT = 3003;
 const JWT_AUTH_SECRET_KEY = '123456789';
 const CATEGORIES_COUNT = 8;

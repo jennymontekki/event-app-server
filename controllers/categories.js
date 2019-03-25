@@ -36,13 +36,13 @@ const fetchEventsByCategoryId = async (request, h) => {
 const initCategoriesController = server => {
   server.route({
     method: 'GET',
-    path: '/categories',
+    path: '/api/categories',
     handler: fetchAllCategories
   });
 
   server.route({
     method: 'GET',
-    path: '/categories/{categoryId}/events/page/{pageNum}',
+    path: '/api/categories/{categoryId}/events/page/{pageNum}',
     config: {
       handler: fetchEventsByCategoryId,
       validate: {

@@ -150,7 +150,7 @@ const deleteEvent = async (request, h) => {
 const initEventsController = server => {
   server.route({
     method: 'GET',
-    path: '/events/page/{pageNum}',
+    path: '/api/events/page/{pageNum}',
     config: {
       handler: fetchAllEvents,
       validate: {
@@ -166,7 +166,7 @@ const initEventsController = server => {
 
   server.route({
     method: 'GET',
-    path: '/events/search',
+    path: '/api/events/search',
     config: {
       handler: fetchEventsSearch,
       validate: {
@@ -180,7 +180,7 @@ const initEventsController = server => {
 
   server.route({
     method: 'GET',
-    path: '/event/{eventId}/details',
+    path: '/api/event/{eventId}/details',
     config: {
       handler: fetchEventDetails,
       validate: {
@@ -193,7 +193,7 @@ const initEventsController = server => {
 
   server.route({
     method: 'GET',
-    path: '/event/{eventId}/messages',
+    path: '/api/event/{eventId}/messages',
     config: {
       handler: fetchEventMessages,
       validate: {
@@ -206,7 +206,7 @@ const initEventsController = server => {
 
   server.route({
     method: 'POST',
-    path: '/event/add',
+    path: '/api/event/add',
     config: {
       auth: 'basic',
       handler: createEvent,
@@ -225,7 +225,7 @@ const initEventsController = server => {
 
   server.route({
     method: 'PUT',
-    path: '/event/{eventId}/edit',
+    path: '/api/event/{eventId}/edit',
     config: {
       auth: 'basic',
       handler: updateEvent,
@@ -247,7 +247,7 @@ const initEventsController = server => {
 
   server.route({
     method: 'DELETE',
-    path: '/event/{eventId}/destroy',
+    path: '/api/event/{eventId}/destroy',
     config: {
       auth: 'basic',
       handler: deleteEvent,

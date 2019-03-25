@@ -165,7 +165,7 @@ const signOut = async (request, h) => {
 const initUsersController = server => {
   server.route({
     method: 'GET',
-    path: '/events/my-events/page/{pageNum}',
+    path: '/api/events/my-events/page/{pageNum}',
     config: {
       auth: 'basic',
       handler: fetchEventsByUserId,
@@ -182,7 +182,7 @@ const initUsersController = server => {
 
   server.route({
     method: 'GET',
-    path: '/events/subscribed/page/{pageNum}',
+    path: '/api/events/subscribed/page/{pageNum}',
     config: {
       auth: 'basic',
       handler: fetchSubscribedEvents,
@@ -199,7 +199,7 @@ const initUsersController = server => {
 
   server.route({
     method: 'GET',
-    path: '/users/profile/messages/page/{pageNum}',
+    path: '/api/users/profile/messages/page/{pageNum}',
     config: {
       auth: 'basic',
       handler: fetchUserMessages,
@@ -216,7 +216,7 @@ const initUsersController = server => {
 
   server.route({
     method: 'GET',
-    path: '/users/profile/notifications/{notificationId}/destroy',
+    path: '/api/users/profile/notifications/{notificationId}/destroy',
     config: {
       auth: 'basic',
       handler: deleteUserMessage,
@@ -230,7 +230,7 @@ const initUsersController = server => {
 
   server.route({
     method: 'POST',
-    path: '/users/{eventId}/subscribe',
+    path: '/api/users/{eventId}/subscribe',
     config: {
       auth: 'basic',
       handler: subscribeToEvent,
@@ -244,7 +244,7 @@ const initUsersController = server => {
 
   server.route({
     method: 'DELETE',
-    path: '/users/{eventId}/unsubscribe',
+    path: '/api/users/{eventId}/unsubscribe',
     config: {
       auth: 'basic',
       handler: unsubscribeFromEvent,
@@ -258,7 +258,7 @@ const initUsersController = server => {
 
   server.route({
     method: 'PATCH',
-    path: '/users/notification/confirm',
+    path: '/api/users/notification/confirm',
     config: {
       auth: 'basic',
       handler: confirmNotification
@@ -267,7 +267,7 @@ const initUsersController = server => {
 
   server.route({
     method: 'POST',
-    path: '/auth/sign-in',
+    path: '/api/auth/sign-in',
     config: {
       handler: signIn,
       validate: {
@@ -281,7 +281,7 @@ const initUsersController = server => {
   
   server.route({
     method: 'POST',
-    path: '/auth/sign-up',
+    path: '/api/auth/sign-up',
     config: {
       handler: signUp,
       validate: {
@@ -296,7 +296,7 @@ const initUsersController = server => {
 
   server.route({
     method: 'DELETE',
-    path: '/auth/sign-out',
+    path: '/api/auth/sign-out',
     config: {
       auth: 'basic',
       handler: signOut
