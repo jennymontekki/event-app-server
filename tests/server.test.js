@@ -14,7 +14,7 @@ let eventId = null;
 describe('add event api', () => {
   it('should create a new event', done => {
     request(server.listener)
-      .post('/event/add')
+      .post('/api/event/add')
       .set('Authorization', userHost.token)
       .send(eventDetailsNewEvent)
       .expect(200)
@@ -27,7 +27,7 @@ describe('add event api', () => {
 
   it('should return 400 for attempt to create a new event with invalid body', done => {
     request(server.listener)
-      .post('/event/add')
+      .post('/api/event/add')
       .set('Authorization', userHost.token)
       .send({})
       .expect(400)
@@ -36,7 +36,7 @@ describe('add event api', () => {
 
   it('should return 401 for attempt to create a new event for user with wrong', done => {
     request(server.listener)
-      .post('/event/add')
+      .post('/api/event/add')
       .set('Authorization', 'wrong token')
       .send(eventDetailsNewEvent)
       .expect(401)
@@ -45,7 +45,7 @@ describe('add event api', () => {
 
   it('should return 401 for attempt to create a new event for unathenticated user', done => {
     request(server.listener)
-      .post('/event/add')
+      .post('/api/event/add')
       .send(eventDetailsNewEvent)
       .expect(401)
       .end((err, res) => err ? done(err) : done());
@@ -55,7 +55,7 @@ describe('add event api', () => {
 describe('edit event api', () => {
   it('should edit event', done => {
     request(server.listener)
-      .put(`/event/${eventId}/edit`)
+      .put(`/api/event/${eventId}/edit`)
       .set('Authorization', userHost.token)
       .send(eventDetailsEditedEvent)
       .expect(200)
@@ -65,7 +65,7 @@ describe('edit event api', () => {
 
   it('should return 400 for attempt to edit event for authenticated user that did not create this event', done => {
     request(server.listener)
-      .put(`/event/${eventId}/edit`)
+      .put(`/api/event/${eventId}/edit`)
       .set('Authorization', userAuthenticated.token)
       .send(eventDetailsEditedEvent)
       .expect(400)
@@ -74,7 +74,7 @@ describe('edit event api', () => {
 
   it('should return 401 for attempt to edit event for unauthenticated user', done => {
     request(server.listener)
-      .put(`/event/${eventId}/edit`)
+      .put(`/api/event/${eventId}/edit`)
       .send(eventDetailsEditedEvent)
       .expect(401)
       .end((err, res) => err ? done(err) : done());
@@ -82,7 +82,7 @@ describe('edit event api', () => {
 
   it('should return 404 for attempt to edit event that does not exist', done => {
     request(server.listener)
-      .put('/event/1000000000/edit')
+      .put('/api/event/1000000000/edit')
       .set('Authorization', userHost.token)
       .send(eventDetailsEditedEvent)
       .expect(404)
@@ -93,7 +93,7 @@ describe('edit event api', () => {
 describe('delete event api', () => {
   it('should return 404 for attempt to delete event that does not exist', done => {
     request(server.listener)
-      .delete('/event/1000000000/destroy')
+      .delete('/api/event/1000000000/destroy')
       .set('Authorization', userHost.token)
       .send()
       .expect(404)
@@ -102,7 +102,7 @@ describe('delete event api', () => {
 
   it('should return 400 for attempt to delete event for authenticated user that did not create this event', done => {
     request(server.listener)
-      .delete(`/event/${eventId}/destroy`)
+      .delete(`/api/event/${eventId}/destroy`)
       .set('Authorization', userAuthenticated.token)
       .send()
       .expect(400)
@@ -111,7 +111,7 @@ describe('delete event api', () => {
 
   it('should return 401 for attempt to delete event for unauthenticated user', done => {
     request(server.listener)
-      .delete(`/event/${eventId}/destroy`)
+      .delete(`/api/event/${eventId}/destroy`)
       .send()
       .expect(401)
       .end((err, res) => err ? done(err) : done());
@@ -119,7 +119,7 @@ describe('delete event api', () => {
 
   it('should delete recently created event', done => {
     request(server.listener)
-      .delete(`/event/${eventId}/destroy`)
+      .delete(`/api/event/${eventId}/destroy`)
       .set('Authorization', userHost.token)
       .send()
       .expect(200)
@@ -130,7 +130,7 @@ describe('delete event api', () => {
 describe('auth sign-up api', () => {
   it('should create new user and authenticate him', done => {
     request(server.listener)
-      .post('/auth/sign-up')
+      .post('/api/auth/sign-up')
       .send({ name: `${userAuthenticated.name}${Math.round(Math.random() * 1000000)}`, email: `${Math.round(Math.random() * 1000000)}${userAuthenticated.email}`, password: userAuthenticated.name })
       .expect(200)
       .expect(res => {
@@ -143,7 +143,7 @@ describe('auth sign-up api', () => {
 
   it('should return message \'email is already taken\' if desired email is already taken', done => {
     request(server.listener)
-      .post('/auth/sign-up')
+      .post('/api/auth/sign-up')
       .send({ name: 'any name', email: userAuthenticated.email, password: 'any password' })
       .expect(401)
       .expect(res => expect(res.body.message).toBe('email is already taken'))
@@ -152,7 +152,7 @@ describe('auth sign-up api', () => {
 
   it('should return 400 for attempt to sign up with invalid body', done => {
     request(server.listener)
-      .post('/auth/sign-up')
+      .post('/api/auth/sign-up')
       .send({ name: 'any name', email: 'any wrong email', password: 'any password' })
       .expect(400)
       .end((err, res) => err ? done(err) : done());
@@ -160,7 +160,7 @@ describe('auth sign-up api', () => {
 
   it('should return message \'name is already taken\' if desired name is already taken', done => {
     request(server.listener)
-      .post('/auth/sign-up')
+      .post('/api/auth/sign-up')
       .send({ name: userAuthenticated.name, email: 'any.email@gmail.com', password: 'any password' })
       .expect(401)
       .expect(res => expect(res.body.message).toBe('name is already taken'))
@@ -171,7 +171,7 @@ describe('auth sign-up api', () => {
 describe('auth sign-in api', () => {
   it('should authenticate user', done => {
     request(server.listener)
-      .post('/auth/sign-in')
+      .post('/api/auth/sign-in')
       .send({ email: userVisitor.email, password: userVisitor.name })
       .expect(200)
       .expect(res => {
@@ -183,7 +183,7 @@ describe('auth sign-in api', () => {
 
   it('should return message \'user with this email does not exist\' for wrong email input', done => {
     request(server.listener)
-      .post('/auth/sign-in')
+      .post('/api/auth/sign-in')
       .send({ email: 'wrong.email@gmail.com', password: userAuthenticated.name })
       .expect(401)
       .expect(res => expect(res.body.message).toBe('user with this email does not exist'))
@@ -192,7 +192,7 @@ describe('auth sign-in api', () => {
 
   it('should return message \'wrong credentials\' for wrong password input', done => {
     request(server.listener)
-      .post('/auth/sign-in')
+      .post('/api/auth/sign-in')
       .send({ email: userAuthenticated.email, password: 'wrong password' })
       .expect(401)
       .expect(res => expect(res.body.message).toBe('wrong credentials'))
@@ -203,7 +203,7 @@ describe('auth sign-in api', () => {
 describe('myEvents and subscribedEvents api', () => {
   it('should return events that were created by this user', done => {
     request(server.listener)
-      .get('/events/my-events/page/1')
+      .get('/api/events/my-events/page/1')
       .set('Authorization', userHost.token)
       .send()
       .expect(200)
@@ -222,7 +222,7 @@ describe('myEvents and subscribedEvents api', () => {
 
   it('should return events that user has been subscribed to', done => {
     request(server.listener)
-      .get('/events/subscribed/page/1')
+      .get('/api/events/subscribed/page/1')
       .set('Authorization', userAuthenticated.token)
       .send()
       .expect(200)
@@ -243,7 +243,7 @@ describe('myEvents and subscribedEvents api', () => {
 describe('subscribe and unsubscribe api', () => {
   it('should subscribe user to event', done => {
     request(server.listener)
-      .post('/users/61/subscribe')
+      .post('/api/users/61/subscribe')
       .set('Authorization', userTemp.token)
       .send()
       .expect(200)
@@ -252,7 +252,7 @@ describe('subscribe and unsubscribe api', () => {
 
   it('should return 401 for unathenticated user on subscribe', done => {
     request(server.listener)
-      .post('/users/61/subscribe')
+      .post('/api/users/61/subscribe')
       .send()
       .expect(401)
       .end((err, res) => err ? done(err) : done());
@@ -260,7 +260,7 @@ describe('subscribe and unsubscribe api', () => {
 
   it('should unsubscribe user from event', done => {
     request(server.listener)
-      .delete('/users/61/unsubscribe')
+      .delete('/api/users/61/unsubscribe')
       .set('Authorization', userTemp.token)
       .send()
       .expect(200)
@@ -271,7 +271,7 @@ describe('subscribe and unsubscribe api', () => {
 describe('auth sign-out api', () => {
   it('should unauthenticate user', done => {
     request(server.listener)
-      .delete('/auth/sign-out')
+      .delete('/api/auth/sign-out')
       .set('Authorization', userTemp.token)
       .send()
       .expect(200)
@@ -280,7 +280,7 @@ describe('auth sign-out api', () => {
 
   it('should return 401 for unauthenticated user', done => {
     request(server.listener)
-      .delete('/auth/sign-out')
+      .delete('/api/auth/sign-out')
       .send()
       .expect(401)
       .end((err, res) => err ? done(err) : done());
